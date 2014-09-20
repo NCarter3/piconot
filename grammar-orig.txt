@@ -1,0 +1,15 @@
+Grammer for picobot as specified in CS5
+Author: Emily Blatter, Nick Carter, Sisi Cheng
+
+A = currentState, {space}, surroundings, {space}, "=>", {space}, moveDir, {space}, newState;
+surroundings = N, E, W, S;
+currentState = firstDigit, digit;
+firstDigit = "_" | digit;
+digit = "0"| "1"| "2"| "3"| "4"| "5"| "6"| "7"| "8"| "9";
+N = "N" | "*" | "x";
+E = "E" | "*" | "x";
+W = "W" | "*" | "x";
+S = "S" | "*" | "x";
+newState = firstDigit, digit;
+moveDir = "N" | "E" | "W" | "S"
+
