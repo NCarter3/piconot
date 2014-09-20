@@ -1,0 +1,63 @@
+Ideal Grammars:
+Author: Emily Blatter, Nick Carter, Sisi Cheng
+
+================================================================================
+Grammar #1: MathBot
+================================================================================
+
+Program = A | A, {? linebreak ?}, Program;
+A = condition, " = ", action;
+condition = state, surrounding, "n", surrounding, "e", surrounding, "w", surrounding, "s";
+action = direction, randomOp, state
+
+surrounding = " + " | " - " | " * ";
+randomOp = " + " | " - " | " * ";
+state = firstDigit, digit;
+firstDigit = "_" | digit;
+digit = "0"| "1"| "2"| "3"| "4"| "5"| "6"| "7"| "8"| "9";
+direction = "n" | "e" | "w" | "s";
+
+MathBot description and justification:
+
+The idea is to make a picobot language that looks like mathematical equations. Instead of using letters to denote directions, we will use Greek letters, as they are more common in mathematical equations and formulas. 
+
+The initial state will be shown in a way similar to the original picobot; it will be an integer from 0 - 99 at the start of a statement. We will use arithmetic operators to denote what is in each direction after that. “+” before a direction letter means that there is a wall in that direction. “-” before a direction letter means that there is nothing in that direction blocking the picobot. “*” before a direction letter is used as a wildcard. By doing this, we can string these together information about the surroundings into something that looks like part of a mathematical equation, like “42 + n + e - w * s”, which means that the picobot is in state 42, there are walls to the north and east, nothing to the west, and south is a wildcard.
+
+After that, instead of an arrow we will have an equal sign before describing the final direction and state. We will use one of the same Greek letters to denote which direction picobot will transition to, which will then be followed by a random operator and an integer to represent the transition state.
+
+Putting this together with the equal sign and the previous mathematical expression, we should have something that looks like an equation. For example, “42 + n + e - w * s = w * 3” would be the same initial state as before, and then the picobot would head west and go to state 3. When the user has written all of their picobot rules, it looks like a system of equations (that probably doesn’t actually have a solution, but that’s not important).
+
+
+
+================================================================================
+Grammar #2: ShakespeareBot
+================================================================================
+
+Program = {A};
+A = currentState, {space}, surroundings, {space}, instructions, {space}, move, {space}, newState, {space};
+
+currentState = “The scene opens at ”, {space}, location;
+digit = "0"| "1"| "2"| "3"| "4"| "5"| "6"| "7"| "8"| "9";
+
+surroundings = "Enter", {space}, NPerson, {space}, EPerson, {space}, WPerson, {space}, SPerson;
+NPerson = "N", {[a-z]};
+EPerson = "E", {[a-z]};
+WPerson = "W", {[a-z]};
+SPerson = "S", {[a-z]};
+
+instructions = NLine, ". ", ELine, ". ", WLine, ". ", SLine, "."
+NLine = {A-Z, a-z, ""} | ending
+ELine = {A-Z, a-z, ""} | ending
+WLine = {A-Z, a-z, ""} | ending
+SLine = {A-Z, a-z, ""} | ending
+ending = "n" | "a" | "w";
+
+move = NPerson, " exits.";
+newState = “Go to “, location;
+space = {? any whitespace ?}
+
+ShakespeareBot Description and Justification:
+
+One of our top priorities with ShakespeareBot is to enable freedom of expression within the domain of map solving. As such, we look to enable our user to write clean, beautiful prose in the form of a program. The source should be as much an artistic work as the algorithm it implements. In addition, true to Shakespeare’s inventive style, we allow for non-standard English in programs. However, language incomprehensible by the lay audience is considered non-idiomatic for obvious reasons.
+
+ShakespeareBot uses an open-prose implementation of Shakespearian English. We allow programs to be specified more by context than content -- many of the identifiers used in a ShakespeareBot program have no effect on the execution of the program but instead add solely idiomatic value. A state is specified with a location specified with “The scene opens at ”. Then, four characters enter the stage, defined and named by the “Enter” keyword. Each character is allowed a sentence, then, in which they play out the action in the scene. Their sentence must end in a “n”, “a”, or “w” in order to specify whether there is nothing, anything, or a wall in their direction. Next, one character may exit, signifying the direction that picobot should move (if at all). Finally, the next location is specified with “Go to”.

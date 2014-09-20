@@ -1,15 +1,18 @@
 Grammer for picobot as specified in CS5
 Author: Emily Blatter, Nick Carter, Sisi Cheng
 
-A = currentState, {space}, surroundings, {space}, "=>", {space}, moveDir, {space}, newState;
+A Picobot program, as specified by CS5, is made up of a number of rules, one on each line. Each rule consists of the current condition of the Picobot (its state and surrounding) and the action to take (direction to go in and next state).
+
+Program = A | A, {? linebreak ?}, Program;
+A = state, {space}, surroundings, {space}, "=>", {space}, moveDir, {space}, state;
+space = " ";
 surroundings = N, E, W, S;
-currentState = firstDigit, digit;
+state = firstDigit, digit;
 firstDigit = "_" | digit;
 digit = "0"| "1"| "2"| "3"| "4"| "5"| "6"| "7"| "8"| "9";
 N = "N" | "*" | "x";
 E = "E" | "*" | "x";
 W = "W" | "*" | "x";
 S = "S" | "*" | "x";
-newState = firstDigit, digit;
 moveDir = "N" | "E" | "W" | "S"
 
