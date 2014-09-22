@@ -1,0 +1,9 @@
+========================================================
+September 22, 2014
+========================================================
+
+We found that there was no easy way to create an ‘=‘ function. Any other symbol similar to the equal sign was also difficult to implement. The best we could do is ‘->’.
+
+When we originally created our language, we didn’t realize there was a stay put direction for Picobot. In order to implement this option, we switched the order of the transition state and the new direction on the rhs of the equation. That way, the first argument will always be a state and the second argument will be a direction, but if the direction is not there, then it will default to staying still. This made it so that we didn’t have to add an extra ‘x’ case for directions, which would then be something we need to check for on the lhs of the equation.
+
+We also added a lot of defaults and made it so that the user could put it something vaguely math-y and it would still come out as a proper Picobot rule. For example, “42 -> 3” would evaluate to “42 **** => x 3” in the original Picobot language. Also, if the user put in something like “42 + e * e - e -> 4 + n”, it would evaluate to “42 *E** => N 4”. If the user puts in multiple definitions for the same direction, the last 
