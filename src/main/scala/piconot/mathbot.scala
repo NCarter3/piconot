@@ -42,6 +42,7 @@ trait ruleClass {
   type state = picolib.semantics.State
   
   implicit def Int2MathbotRule(state:Int) = new mathbotRule(State(state.toString))
+  implicit def MathbotInstr2Rule(rule:mathbotInstr) = rule.convert
     
   class mathbotRule(val currState: state = State("0"),
 		  			val dirN:picoDir = picolib.semantics.Anything,
@@ -90,26 +91,24 @@ trait ruleClass {
   
   class mathbotInstr(val nextState:state = State("0"), val moveDir:picoMoveDir = picolib.semantics.StayHere, val mathbot: mathbotRule) {
     
-    def +(rhs: dir): Rule = {
-      val instruction = rhs match {
+    def +(rhs: dir): mathbotInstr = {
+      rhs match {
 	      case n => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
 	      case e => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
 	      case w => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
 	      case s => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
       }
       
-      instruction.convert()
     }
     
-    def -(rhs: dir): Rule = {
-      val instruction = rhs match {
+    def -(rhs: dir): mathbotInstr = {
+      rhs match {
 	      case n => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
 	      case e => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
 	      case w => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
 	      case s => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
       }
       
-      instruction.convert()
     }
     
     def convert(): Rule = {
@@ -135,8 +134,18 @@ object test extends JFXApp with ruleClass {
   val emptyMaze = Maze("resources" + File.separator + "empty.txt")
 
   
-  val rules = List(
+  val rules: List[picolib.semantics.Rule] = List(
+0 - n -> 0 + n,
+0 + n - e - w * s -> 1 + w,
+0 + n - e + w * s -> 2 - e,
+0 + n + e -> 1,
 
+1 - s -> 1 + s,
+1 + s - w -> 0 + w,
+1 + s + w -> 2 - e,
+
+2 - e -> 2 + e,
+2 + e -> 0
 		  )
   
   
