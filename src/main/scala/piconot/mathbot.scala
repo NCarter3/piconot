@@ -136,11 +136,7 @@ object test extends JFXApp with ruleClass {
 
   
   val rules = List(
-      0 * n * e - w * s -> 0 + w,
-      0 -n*e+w*s->1+n,
-      0+n-e+w*s->2+s,
-      1-n*e*w*s->1+n
-      
+
 		  )
   
   

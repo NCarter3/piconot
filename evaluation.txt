@@ -1,9 +1,45 @@
-========================================================
+================================================================================
 September 22, 2014
-========================================================
+================================================================================
 
-We found that there was no easy way to create an ‘=‘ function. Any other symbol similar to the equal sign was also difficult to implement. The best we could do is ‘->’.
+We found that there was no easy way to create an ‘=‘ function. Any other symbol 
+similar to the equal sign was also difficult to implement. The best we could do 
+is ‘->’.
 
-When we originally created our language, we didn’t realize there was a stay put direction for Picobot. In order to implement this option, we switched the order of the transition state and the new direction on the rhs of the equation. That way, the first argument will always be a state and the second argument will be a direction, but if the direction is not there, then it will default to staying still. This made it so that we didn’t have to add an extra ‘x’ case for directions, which would then be something we need to check for on the lhs of the equation.
+When we originally created our language, we didn’t realize there was a stay put 
+direction for Picobot. In order to implement this option, we switched the order 
+of the transition state and the new direction on the rhs of the equation. That 
+way, the first argument will always be a state and the second argument will be 
+a direction, but if the direction is not there, then it will default to staying
+still. This made it so that we didn’t have to add an extra ‘x’ case for
+directions, which would then be something we need to check for on the lhs of 
+the equation.
 
-We also added a lot of defaults and made it so that the user could put it something vaguely math-y and it would still come out as a proper Picobot rule. For example, “42 -> 3” would evaluate to “42 **** => x 3” in the original Picobot language. Also, if the user put in something like “42 + e * e - e -> 4 + n”, it would evaluate to “42 *E** => N 4”. If the user puts in multiple definitions for the same direction, the last 
+We also added a lot of defaults and made it so that the user could put it 
+something vaguely math-y and it would still come out as a proper Picobot rule. 
+For example, “42 -> 3” would evaluate to “42 **** => x 3” in the original 
+Picobot language. Also, if the user put in something like 
+“42 + e * e - e -> 4 + n”, it would evaluate to “42 *E** => N 4”. If the user 
+puts in multiple definitions for the same direction, the last one will be the 
+only one that will become a part of the rule.
+
+================================================================================
+September 26, 2014
+================================================================================
+We experienced difficulty in specifying directions when making a rule without
+saying something like 'ruleClass.s'. We got around this by making 'dir' a trait,
+and then n, e, w, and s were classes that extended dir with a companion object
+for each.
+
+We realized that not everyone in the group was thrilled about having spaces 
+between arithmetic operators and directions, which was our original design.
+Because the person who was writing code today is the one who was the most
+vehemently opposed to spaces, they managed to tweak the language so that spaces
+were not required.
+
+We also had problems with the '*' operator binding closer than the '+' or '-'
+operator, which made it so rules were not evaluated in the correct order. At
+the moment, we have changed everything to mathbotRules, including the dirs. 
+Though this does not currently give us any errors, we worry about this giving
+our users too much flexibility to the user, allowing something like 'w' to be
+a rule by itself.
