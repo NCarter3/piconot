@@ -120,21 +120,21 @@ trait ruleClass {
 	      this.nextState)
     }
         
-//    // * works weird
+    // * works weird
 //    def *(rhs: dir): mathbotInstr = {
 //      rhs match {
-//	      case rhs:n => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
-//	      case rhs:e => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
-//	      case rhs:w => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
-//	      case rhs:s => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
+//	      case `n` => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
+//	      case `e` => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
+//	      case `w` => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
+//	      case `s` => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
 //      }
 //    }
   }
   
-  class qed(bot: Unit) {
-    val QED = {
-      bot
-    }
+  object Proof {
+    def Begin (maze: String): considerable = {
+  		  new considerable(maze)
+	}
   }
   
   class considerable(val maze: String) {
@@ -146,52 +146,12 @@ trait ruleClass {
 	    new qed(EmptyBot)
 	  }
 }
-  
-  object Proof {
-      def Begin (maze: String): considerable = {
-    		  new considerable(maze)
-	  }
+  class qed(bot: Unit) {
+    val QED = {
+      bot
+    }
   }
+  
+
 }
 
-object test extends JFXApp with ruleClass {
-  Proof. Begin ("empty.txt"). Consider (
-        0 - n -> 0 + n,
-		0 + n - e - w -> 1 + w,
-		0 + n - e + w -> 2 - e,
-		0 + n + e -> 1,
-		
-		1 - s -> 1 + s,
-		1 + s - w -> 0 + w,
-		1 + s + w -> 2 - e,
-		
-		2 - e -> 2 + e,
-		2 + e -> 0
-  ). QED
-}
-  
-//object test extends JFXApp with ruleClass {
-//  val emptyMaze = Maze("resources" + File.separator + "empty.txt")
-//
-//  
-//  val rules: List[picolib.semantics.Rule] = List(
-//0 - n -> 0 + n,
-//0 + n - e - w -> 1 + w,
-//0 + n - e + w -> 2 - e,
-//0 + n + e -> 1,
-//
-//1 - s -> 1 + s,
-//1 + s - w -> 0 + w,
-//1 + s + w -> 2 - e,
-//
-//2 - e -> 2 + e,
-//2 + e -> 0
-//		  )
-//  
-//  
-//
-//  object EmptyBot extends Picobot(emptyMaze, rules)
-//    with TextDisplay with GUIDisplay
-//
-//  stage = EmptyBot.mainStage
-//}
