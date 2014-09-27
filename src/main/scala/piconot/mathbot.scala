@@ -53,29 +53,29 @@ trait ruleClass {
     
     def +(rhs: dir): mathbotRule = {
        rhs match {
-         case rhs:n => new mathbotRule(currState, picolib.semantics.Blocked, dirE, dirW, dirS)
-         case rhs:e => new mathbotRule(currState, dirN, picolib.semantics.Blocked, dirW, dirS)
-         case rhs:w => new mathbotRule(currState, dirN, dirE, picolib.semantics.Blocked, dirS)
-         case rhs:s => new mathbotRule(currState, dirN, dirE, dirW, picolib.semantics.Blocked)
+         case n => new mathbotRule(currState, picolib.semantics.Blocked, dirE, dirW, dirS)
+         case e => new mathbotRule(currState, dirN, picolib.semantics.Blocked, dirW, dirS)
+         case w => new mathbotRule(currState, dirN, dirE, picolib.semantics.Blocked, dirS)
+         case s => new mathbotRule(currState, dirN, dirE, dirW, picolib.semantics.Blocked)
          //default => new mathbotRule(picolib.semantics.Blocked, picolib.semantics.Blocked, picolib.semantics.Blocked, picolib.semantics.Blocked)
        }
     }
     
     def *(rhs: dir): mathbotRule = {
        rhs match {
-         case rhs:n => new mathbotRule(currState, picolib.semantics.Anything, dirE, dirW, dirS)
-         case rhs:e => new mathbotRule(currState, dirN, picolib.semantics.Anything, dirW, dirS)
-         case rhs:w => new mathbotRule(currState, dirN, dirE, picolib.semantics.Anything, dirS)
-         case rhs:s => new mathbotRule(currState, dirN, dirE, dirW, picolib.semantics.Anything)
+         case n => new mathbotRule(currState, picolib.semantics.Anything, dirE, dirW, dirS)
+         case e => new mathbotRule(currState, dirN, picolib.semantics.Anything, dirW, dirS)
+         case w => new mathbotRule(currState, dirN, dirE, picolib.semantics.Anything, dirS)
+         case s => new mathbotRule(currState, dirN, dirE, dirW, picolib.semantics.Anything)
        }
     }
     
     def -(rhs: dir): mathbotRule = {
        rhs match {
-         case rhs:n => new mathbotRule(currState, picolib.semantics.Open, dirE, dirW, dirS)
-         case rhs:e => new mathbotRule(currState, dirN, picolib.semantics.Open, dirW, dirS)
-         case rhs:w => new mathbotRule(currState, dirN, dirE, picolib.semantics.Open, dirS)
-         case rhs:s => new mathbotRule(currState, dirN, dirE, dirW, picolib.semantics.Open)
+         case n => new mathbotRule(currState, picolib.semantics.Open, dirE, dirW, dirS)
+         case e => new mathbotRule(currState, dirN, picolib.semantics.Open, dirW, dirS)
+         case w => new mathbotRule(currState, dirN, dirE, picolib.semantics.Open, dirS)
+         case s => new mathbotRule(currState, dirN, dirE, dirW, picolib.semantics.Open)
        }
     }
     
@@ -92,10 +92,10 @@ trait ruleClass {
     
     def +(rhs: dir): Rule = {
       val instruction = rhs match {
-	      case rhs:n => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
-	      case rhs:e => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
-	      case rhs:w => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
-	      case rhs:s => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
+	      case n => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
+	      case e => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
+	      case w => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
+	      case s => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
       }
       
       instruction.convert()
@@ -103,10 +103,10 @@ trait ruleClass {
     
     def -(rhs: dir): Rule = {
       val instruction = rhs match {
-	      case rhs:n => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
-	      case rhs:e => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
-	      case rhs:w => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
-	      case rhs:s => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
+	      case n => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
+	      case e => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
+	      case w => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
+	      case s => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
       }
       
       instruction.convert()
