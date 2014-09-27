@@ -29,7 +29,7 @@ September 26, 2014
 We experienced difficulty in specifying directions when making a rule without
 saying something like 'ruleClass.s'. We got around this by making 'dir' a trait,
 and then n, e, w, and s were classes that extended dir with a companion object
-for each.
+for each. 
 
 We realized that not everyone in the group was thrilled about having spaces 
 between arithmetic operators and directions, which was our original design.
@@ -49,4 +49,25 @@ September 27, 2014
 ================================================================================
 We are having difficulties with our case statements. We have many different
 levels of inheritance involving the classes for picobot directions and we are
-not pattern-matching to them correctly.
+not pattern-matching to them correctly. The error messages can be cryptic 
+sometimes and we have to carefully examine what Scala thinks the types of each
+object is in a line of code to debug it.
+
+We resolved the previous problem by redesigning our inheritance structures and using
+the Eclipse-recommended tick-marks around the classes we're matching against.
+We think we would have had a really hard time discovering this convention if
+Eclipse warnings have not suggested it.
+
+We are now working on elimiting the List() syntax around our Mathbot rules. We
+find it difficult to incorporate additional syntax structures without re-
+thinking existing code/architecture and possibly modifying them.
+
+We added the "Proof" keyword to hide underlaying syntax such as
+"val emptyMaze = Maze("resources" + File.separator + "empty.txt")"
+But currently, "emptyRoom.txt" is hardcoded into our implementation and syntax.
+We are working on separating it out as a new argument.
+
+
+
+
+
