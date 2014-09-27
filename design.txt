@@ -66,17 +66,21 @@ to * and x when we should be allowed to use the whole alphabet?
 What behaviors are easier to express in your design than in Picobot’s original
 design?  If there are no such behaviors, why not?
 
-A: 
+A: ShakespeareBot rules are more fluent and like natural language, so it may
+be easier for the user to type out.
 
 What behaviors are more difficult to express in your design than in Picobot’s
 original design? If there are no such behaviors, why not?
 
-A:
+A: ShakespeareBot rules are longer than original Picobot rules by design. It
+may also be more challenging for the user to write appropriately idiomatic
+rules.
 
 On a scale of 1–10 (where 10 is “very different”), how different is your syntax
 from PicoBot’s original design?
 
-A:
+A: ShakespeareBot is probably a 8 on this scale. It is dramatically different
+syntax from the original design because it contains a lot of syntactic sugar.
 
 Is there anything you don’t like about your design?
 
