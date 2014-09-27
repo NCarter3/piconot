@@ -18,24 +18,37 @@ import picolib.semantics.TextDisplay
 import picolib.semantics.West
 import scalafx.application.JFXApp
 
-class mathbot {
-	
-  class dir
-  class n extends dir
-  class e extends dir
-  class w extends dir
-  class s extends dir
+
+
+
+class mathbot(val ruleList: List[ruleClass.mathbotRule]) {
+  
+}
+  
+trait ruleClass {
+  	
+  trait dir
+  class n
+  object n extends dir
+  class e
+  object e extends dir
+  class w
+  object w extends dir
+  class s
+  object s extends dir
   
   type picoDir = picolib.semantics.RelativeDescription
   type picoMoveDir = picolib.semantics.MoveDirection
   type state = picolib.semantics.State
   
+  implicit def Int2MathbotRule(state:Int) = new mathbotRule(State(state.toString))
+    
   class mathbotRule(val currState: state = State("0"),
 		  			val dirN:picoDir = picolib.semantics.Anything,
       				val dirE:picoDir = picolib.semantics.Anything,
       				val dirW:picoDir = picolib.semantics.Anything,
-      				val dirS:picoDir = picolib.semantics.Anything,
-      				val instr:mathbotInstr = new mathbotInstr) {
+      				val dirS:picoDir = picolib.semantics.Anything
+		  			) {
     //def this() = this(picolib.semantics.Anything, picolib.semantics.Anything, picolib.semantics.Anything, picolib.semantics.Anything)
     
     def +(rhs: dir): mathbotRule = {
@@ -66,27 +79,55 @@ class mathbot {
        }
     }
     
-    def ->(rhs: Int): mathbotRule = {
-        val instr = new mathbotInstr(State(rhs.toString))
-        new mathbotRule (currState, dirN, dirE, dirW, dirS, instr)
+    def ->(rhs: Int): mathbotInstr = {
+        new mathbotInstr(State(rhs.toString), mathbot=this)
+//        new mathbotRule (currState, dirN, dirE, dirW, dirS, instr)
     }
     
-    implicit def Int2MathbotRule(state:Int) = new mathbotRule(State(state.toString))
+    
     
   }
   
-  class mathbotInstr(val nextState:state = State("0"), val moveDir:picoMoveDir = picolib.semantics.StayHere) {
-    //def this = this()
+  class mathbotInstr(val nextState:state = State("0"), val moveDir:picoMoveDir = picolib.semantics.StayHere, val mathbot: mathbotRule) {
     
     def +(rhs: dir): mathbotInstr = {
       rhs match {
-	      case rhs:n => new mathbotInstr(nextState, picolib.semantics.North)
-	      case rhs:e => new mathbotInstr(nextState, picolib.semantics.East)
-	      case rhs:w => new mathbotInstr(nextState, picolib.semantics.West)
-	      case rhs:s => new mathbotInstr(nextState, picolib.semantics.South)
+	      case rhs:n => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
+	      case rhs:e => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
+	      case rhs:w => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
+	      case rhs:s => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
       }
     }
-     
+    
+    def -(rhs: dir): mathbotInstr = {
+      rhs match {
+	      case rhs:n => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
+	      case rhs:e => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
+	      case rhs:w => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
+	      case rhs:s => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
+      }
+    }
+        
+//    // * works weird
+//    def *(rhs: dir): mathbotInstr = {
+//      rhs match {
+//	      case rhs:n => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
+//	      case rhs:e => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
+//	      case rhs:w => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
+//	      case rhs:s => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
+//      }
+//    }
   }
+}
   
+object test extends JFXApp with ruleClass {
+  val emptyMaze = Maze("resources" + File.separator + "empty.txt")
+
+  
+  val rules = 42 * s * w * n * e -> 32 + n
+
+  object EmptyBot extends Picobot(emptyMaze, rules)
+    with TextDisplay with GUIDisplay
+
+  stage = EmptyBot.mainStage
 }
