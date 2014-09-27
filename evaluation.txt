@@ -43,3 +43,10 @@ the moment, we have changed everything to mathbotRules, including the dirs.
 Though this does not currently give us any errors, we worry about this giving
 our users too much flexibility to the user, allowing something like 'w' to be
 a rule by itself.
+
+================================================================================
+September 27, 2014
+================================================================================
+We are having difficulties with our case statements. We have many different
+levels of inheritance involving the classes for picobot directions and we are
+not pattern-matching to them correctly.

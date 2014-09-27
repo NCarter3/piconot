@@ -27,15 +27,15 @@ import scalafx.application.JFXApp
   
 trait ruleClass {
   	
-  trait dir
+  trait dir extends mathbotRule
   class n
-  object n extends mathbotRule
+  object n extends dir
   class e
-  object e extends mathbotRule
+  object e extends dir
   class w
-  object w extends mathbotRule
+  object w extends dir
   class s
-  object s extends mathbotRule
+  object s extends dir
   
   type picoDir = picolib.semantics.RelativeDescription
   type picoMoveDir = picolib.semantics.MoveDirection
@@ -49,34 +49,34 @@ trait ruleClass {
       				val dirE:picoDir = picolib.semantics.Anything,
       				val dirW:picoDir = picolib.semantics.Anything,
       				val dirS:picoDir = picolib.semantics.Anything
-		  			) extends dir {
+		  			) {
     //def this() = this(picolib.semantics.Anything, picolib.semantics.Anything, picolib.semantics.Anything, picolib.semantics.Anything)
     
     def +(rhs: dir): mathbotRule = {
        rhs match {
-         case n => new mathbotRule(currState, picolib.semantics.Blocked, dirE, dirW, dirS)
-         case e => new mathbotRule(currState, dirN, picolib.semantics.Blocked, dirW, dirS)
-         case w => new mathbotRule(currState, dirN, dirE, picolib.semantics.Blocked, dirS)
-         case s => new mathbotRule(currState, dirN, dirE, dirW, picolib.semantics.Blocked)
+         case `n` => new mathbotRule(currState, picolib.semantics.Blocked, dirE, dirW, dirS)
+         case `e` => new mathbotRule(currState, dirN, picolib.semantics.Blocked, dirW, dirS)
+         case `w` => new mathbotRule(currState, dirN, dirE, picolib.semantics.Blocked, dirS)
+         case `s` => new mathbotRule(currState, dirN, dirE, dirW, picolib.semantics.Blocked)
          //default => new mathbotRule(picolib.semantics.Blocked, picolib.semantics.Blocked, picolib.semantics.Blocked, picolib.semantics.Blocked)
        }
     }
     
     def *(rhs: dir): mathbotRule = {
        rhs match {
-         case n => new mathbotRule(currState, picolib.semantics.Anything, dirE, dirW, dirS)
-         case e => new mathbotRule(currState, dirN, picolib.semantics.Anything, dirW, dirS)
-         case w => new mathbotRule(currState, dirN, dirE, picolib.semantics.Anything, dirS)
-         case s => new mathbotRule(currState, dirN, dirE, dirW, picolib.semantics.Anything)
+         case `n` => new mathbotRule(currState, picolib.semantics.Anything, dirE, dirW, dirS)
+         case `e` => new mathbotRule(currState, dirN, picolib.semantics.Anything, dirW, dirS)
+         case `w` => new mathbotRule(currState, dirN, dirE, picolib.semantics.Anything, dirS)
+         case `s` => new mathbotRule(currState, dirN, dirE, dirW, picolib.semantics.Anything)
        }
     }
     
     def -(rhs: dir): mathbotRule = {
        rhs match {
-         case n => new mathbotRule(currState, picolib.semantics.Open, dirE, dirW, dirS)
-         case e => new mathbotRule(currState, dirN, picolib.semantics.Open, dirW, dirS)
-         case w => new mathbotRule(currState, dirN, dirE, picolib.semantics.Open, dirS)
-         case s => new mathbotRule(currState, dirN, dirE, dirW, picolib.semantics.Open)
+         case `n` => new mathbotRule(currState, picolib.semantics.Open, dirE, dirW, dirS)
+         case `e` => new mathbotRule(currState, dirN, picolib.semantics.Open, dirW, dirS)
+         case `w` => new mathbotRule(currState, dirN, dirE, picolib.semantics.Open, dirS)
+         case `s` => new mathbotRule(currState, dirN, dirE, dirW, picolib.semantics.Open)
        }
     }
     
@@ -93,20 +93,20 @@ trait ruleClass {
     
     def +(rhs: dir): mathbotInstr = {
       rhs match {
-	      case n => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
-	      case e => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
-	      case w => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
-	      case s => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
+	      case `n` => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
+	      case `e` => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
+	      case `w` => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
+	      case `s` => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
       }
       
     }
     
     def -(rhs: dir): mathbotInstr = {
       rhs match {
-	      case n => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
-	      case e => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
-	      case w => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
-	      case s => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
+	      case `n` => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
+	      case `e` => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
+	      case `w` => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
+	      case `s` => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
       }
       
     }
@@ -136,8 +136,8 @@ object test extends JFXApp with ruleClass {
   
   val rules: List[picolib.semantics.Rule] = List(
 0 - n -> 0 + n,
-0 + n - e - w * s -> 1 + w,
-0 + n - e + w * s -> 2 - e,
+0 + n - e - w -> 1 + w,
+0 + n - e + w -> 2 - e,
 0 + n + e -> 1,
 
 1 - s -> 1 + s,
