@@ -84,4 +84,5 @@ syntax from the original design because it contains a lot of syntactic sugar.
 
 Is there anything you don’t like about your design?
 
-A: 
+A: We do not like the fact that user can abuse the freedom offered in
+ShakespeareBot and write basically gibberish as rules
