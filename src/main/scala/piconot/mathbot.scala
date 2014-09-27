@@ -21,9 +21,9 @@ import scalafx.application.JFXApp
 
 
 
-class mathbot(val ruleList: List[ruleClass.mathbotRule]) {
-  
-}
+//class mathbot(val ruleList: List[ruleClass.mathbotRule]) {
+//  
+//}
   
 trait ruleClass {
   	
@@ -90,22 +90,33 @@ trait ruleClass {
   
   class mathbotInstr(val nextState:state = State("0"), val moveDir:picoMoveDir = picolib.semantics.StayHere, val mathbot: mathbotRule) {
     
-    def +(rhs: dir): mathbotInstr = {
-      rhs match {
+    def +(rhs: dir): Rule = {
+      val instruction = rhs match {
 	      case rhs:n => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
 	      case rhs:e => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
 	      case rhs:w => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
 	      case rhs:s => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
       }
+      
+      instruction.convert()
     }
     
-    def -(rhs: dir): mathbotInstr = {
-      rhs match {
+    def -(rhs: dir): Rule = {
+      val instruction = rhs match {
 	      case rhs:n => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
 	      case rhs:e => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
 	      case rhs:w => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
 	      case rhs:s => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
       }
+      
+      instruction.convert()
+    }
+    
+    def convert(): Rule = {
+      Rule(this.mathbot.currState,
+	      Surroundings(this.mathbot.dirN, this.mathbot.dirE, this.mathbot.dirW, this.mathbot.dirS),
+	      this.moveDir,
+	      this.nextState)
     }
         
 //    // * works weird
@@ -124,9 +135,15 @@ object test extends JFXApp with ruleClass {
   val emptyMaze = Maze("resources" + File.separator + "empty.txt")
 
   
-  val rules = 42 * s * w * n * e -> 32 + n
+  val rule = List(
+      0 * n * e - w * s -> 0 + w,
+      42 * s * w * n * e -> 32 + n
+      
+		  )
+  
+  
 
-  object EmptyBot extends Picobot(emptyMaze, rules)
+  object EmptyBot extends Picobot(emptyMaze, List(rule))
     with TextDisplay with GUIDisplay
 
   stage = EmptyBot.mainStage
