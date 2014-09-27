@@ -1,5 +1,55 @@
+================================================================================
+Grammar #1: MathBot
+================================================================================
 Who is the target for this design, e.g., are you assuming any knowledge on the
 part of the language users?
+
+A: The target for this design is people who are excessively enthusiastic about
+math. We are assuming familiarity with arithmetic operations and mathetmatical
+equations, but they do not need to actually understand how they work. No 
+mathematical skill is required, but enthusiasm for math is encouraged!
+
+Why did you choose this design, i.e., why did you think it would be a good idea
+for users to express the maze-searching computation using this syntax?
+
+A: It is very similar to how picobot is already implemented, but the programs
+you can make in it look more interesting. Also, because we allow the user to
+leave out parts of the equation, it allows them more freedom and felxibility.
+
+What behaviors are easier to express in your design than in Picobot’s original
+design?  If there are no such behaviors, why not?
+
+A: Behaviors with a lot of 'Anything' directions on the left side would be
+easier to implement in this language. If the user knows about these defaults,
+their rules for picobot can be shorter. Also, the user does not have to 
+remember what order to put the information about the surroundings in because
+they can put them in whatever order they'd like, instead of NEWS order.
+
+What behaviors are more difficult to express in your design than in Picobot’s
+original design? If there are no such behaviors, why not?
+
+A: Most things are about equally difficult in our mathbot language and the
+original picobot language. In a way, stating the original surroundings can
+be more difficult if you're specifying information for each direction because
+you have to specify both the direction and the information about it, whereas
+with the original picobot, the user would only have to put a letter representing
+the direction, 'X', or '*'.
+
+On a scale of 1–10 (where 10 is “very different”), how different is your syntax
+from PicoBot’s original design?
+
+4. It is still similar in overall structure, but we have added extra symbols
+and given the user more flexibility.
+
+Is there anything you don’t like about your design?
+Nope.
+
+================================================================================
+Grammar #2: ShakespeareBot
+================================================================================
+Who is the target for this design, e.g., are you assuming any knowledge on the
+part of the language users?
+
 
 Why did you choose this design, i.e., why did you think it would be a good idea
 for users to express the maze-searching computation using this syntax?
