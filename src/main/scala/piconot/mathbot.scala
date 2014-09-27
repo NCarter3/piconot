@@ -29,13 +29,13 @@ trait ruleClass {
   	
   trait dir
   class n
-  object n extends dir
+  object n extends mathbotRule
   class e
-  object e extends dir
+  object e extends mathbotRule
   class w
-  object w extends dir
+  object w extends mathbotRule
   class s
-  object s extends dir
+  object s extends mathbotRule
   
   type picoDir = picolib.semantics.RelativeDescription
   type picoMoveDir = picolib.semantics.MoveDirection
@@ -48,7 +48,7 @@ trait ruleClass {
       				val dirE:picoDir = picolib.semantics.Anything,
       				val dirW:picoDir = picolib.semantics.Anything,
       				val dirS:picoDir = picolib.semantics.Anything
-		  			) {
+		  			) extends dir {
     //def this() = this(picolib.semantics.Anything, picolib.semantics.Anything, picolib.semantics.Anything, picolib.semantics.Anything)
     
     def +(rhs: dir): mathbotRule = {
@@ -135,15 +135,17 @@ object test extends JFXApp with ruleClass {
   val emptyMaze = Maze("resources" + File.separator + "empty.txt")
 
   
-  val rule = List(
+  val rules = List(
       0 * n * e - w * s -> 0 + w,
-      42 * s * w * n * e -> 32 + n
+      0 -n*e+w*s->1+n,
+      0+n-e+w*s->2+s,
+      1-n*e*w*s->1+n
       
 		  )
   
   
 
-  object EmptyBot extends Picobot(emptyMaze, List(rule))
+  object EmptyBot extends Picobot(emptyMaze, rules)
     with TextDisplay with GUIDisplay
 
   stage = EmptyBot.mainStage
