@@ -68,7 +68,21 @@ But currently, "emptyRoom.txt" is hardcoded into our implementation and syntax.
 We are working on separating it out as a new argument.
 
 We implemented some top-level syntactic sugar to make a set of mathbot rules
-look like a proof for a given picobot environment.
+look like a proof for a given picobot environment. Now our grammar begins the
+program with "Proof.", reads in a picobot environment with the keyword Begin(),
+lists the picobot rules using the keyword Consider, and the program is ran by
+the keyword QED.
+
+Finally, the "*" operator broke again due to our previous changes. We could not
+find a satisfying solution that make it work on either side of the "->" 
+operator, so we decided to eliminate the use of "*" from our grammar. Our
+syntax is equally expressive without it, because any direction left unspecified
+will default to the state "Anything".
+
+We're very sad that we could not find a solution to fix this and support "*".
+Our main issues is that pattern-matching is extremely powerful but poorly-
+documented. The slightest change in scala syntax can completely change the 
+meaning of our code.
 
 
 
