@@ -67,6 +67,9 @@ We added the "Proof" keyword to hide underlaying syntax such as
 But currently, "emptyRoom.txt" is hardcoded into our implementation and syntax.
 We are working on separating it out as a new argument.
 
+We implemented some top-level syntactic sugar to make a set of mathbot rules
+look like a proof for a given picobot environment.
+
 
 
 
