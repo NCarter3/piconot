@@ -17,26 +17,23 @@ import picolib.semantics.Surroundings
 import picolib.semantics.TextDisplay
 import picolib.semantics.West
 import scalafx.application.JFXApp
-
-
-
-
-//class mathbot(val ruleList: List[ruleClass.mathbotRule]) {
-//  
-//}
   
-trait ruleClass {
-  	
+trait Mathbot {
+  
+  // used in case a user doesn't feel like typing in Greek letters
+  // purely syntactic sugar for those who don't like being idiomatic
+  val n = η
+  val e = ε
+  val w = ω
+  val s = ς
+  
   trait dir extends mathbotRule
-  class n
-  object n extends dir
-  class e
-  object e extends dir
-  class w
-  object w extends dir
-  class s
-  object s extends dir
+  object η extends dir
+  object ε extends dir
+  object ω extends dir
+  object ς extends dir
   
+  // typedefs to make our lives easier
   type picoDir = picolib.semantics.RelativeDescription
   type picoMoveDir = picolib.semantics.MoveDirection
   type state = picolib.semantics.State
@@ -44,71 +41,87 @@ trait ruleClass {
   implicit def Int2MathbotRule(state:Int) = new mathbotRule(State(state.toString))
   implicit def MathbotInstr2Rule(rule:mathbotInstr) = rule.convert
     
+  /* 
+   * Class: mathbotRule
+   * contains operators for describing the surroundings for a picobot 
+   * essentially, the lhs of a picobot rule
+   * takes in information about current state and what is in each direction
+   * default is state 0 with anything in each direction
+   * */
   class mathbotRule(val currState: state = State("0"),
-		  			val dirN:picoDir = picolib.semantics.Anything,
+		  			val dirN:picoDir = picolib.semantics.Anything, 
       				val dirE:picoDir = picolib.semantics.Anything,
       				val dirW:picoDir = picolib.semantics.Anything,
       				val dirS:picoDir = picolib.semantics.Anything
 		  			) {
-    //def this() = this(picolib.semantics.Anything, picolib.semantics.Anything, picolib.semantics.Anything, picolib.semantics.Anything)
     
+    /*
+     *  Operator that states there is a wall to the rhs direction
+     * ex: + ω means there is a wall to the west
+     */
     def +(rhs: dir): mathbotRule = {
        rhs match {
-         case `n` => new mathbotRule(currState, picolib.semantics.Blocked, dirE, dirW, dirS)
-         case `e` => new mathbotRule(currState, dirN, picolib.semantics.Blocked, dirW, dirS)
-         case `w` => new mathbotRule(currState, dirN, dirE, picolib.semantics.Blocked, dirS)
-         case `s` => new mathbotRule(currState, dirN, dirE, dirW, picolib.semantics.Blocked)
-         //default => new mathbotRule(picolib.semantics.Blocked, picolib.semantics.Blocked, picolib.semantics.Blocked, picolib.semantics.Blocked)
+         case `η` => new mathbotRule(currState, picolib.semantics.Blocked, dirE, dirW, dirS)
+         case `ε` => new mathbotRule(currState, dirN, picolib.semantics.Blocked, dirW, dirS)
+         case `ω` => new mathbotRule(currState, dirN, dirE, picolib.semantics.Blocked, dirS)
+         case `ς` => new mathbotRule(currState, dirN, dirE, dirW, picolib.semantics.Blocked)
        }
     }
     
-    def *(rhs: dir): mathbotRule = {
-       rhs match {
-         case `n` => new mathbotRule(currState, picolib.semantics.Anything, dirE, dirW, dirS)
-         case `e` => new mathbotRule(currState, dirN, picolib.semantics.Anything, dirW, dirS)
-         case `w` => new mathbotRule(currState, dirN, dirE, picolib.semantics.Anything, dirS)
-         case `s` => new mathbotRule(currState, dirN, dirE, dirW, picolib.semantics.Anything)
-       }
-    }
-    
+    /* 
+     * Operator that states there is nothing in the rhs direction
+     * ex: - ω means there is nothing to the west
+     */
     def -(rhs: dir): mathbotRule = {
        rhs match {
-         case `n` => new mathbotRule(currState, picolib.semantics.Open, dirE, dirW, dirS)
-         case `e` => new mathbotRule(currState, dirN, picolib.semantics.Open, dirW, dirS)
-         case `w` => new mathbotRule(currState, dirN, dirE, picolib.semantics.Open, dirS)
-         case `s` => new mathbotRule(currState, dirN, dirE, dirW, picolib.semantics.Open)
+         case `η` => new mathbotRule(currState, picolib.semantics.Open, dirE, dirW, dirS)
+         case `ε` => new mathbotRule(currState, dirN, picolib.semantics.Open, dirW, dirS)
+         case `ω` => new mathbotRule(currState, dirN, dirE, picolib.semantics.Open, dirS)
+         case `ς` => new mathbotRule(currState, dirN, dirE, dirW, picolib.semantics.Open)
        }
     }
     
+    /*
+     * Operator that declares the end of the lhs of a rule, returns
+     * an Instr to get the instruction part of the rule
+     */
     def ->(rhs: Int): mathbotInstr = {
         new mathbotInstr(State(rhs.toString), mathbot=this)
-//        new mathbotRule (currState, dirN, dirE, dirW, dirS, instr)
-    }
-    
-    
-    
+    }   
   }
   
+  /*
+   * Class: mathbotInstr
+   * contains operators for describing what a picobot should do in a certain state/mathbotRule
+   * essentially, the rhs of a picobot rule
+   * takes in a state, a direction to go in, and a mathbotRule
+   * default is to go to state 0 and stay put
+   */
   class mathbotInstr(nextState:state = State("0"), 
       moveDir:picoMoveDir = picolib.semantics.StayHere, 
       mathbot: mathbotRule) {
     
+    /* 
+     * Essentially an operator that does nothing but set the
+     * new direction to rhs
+     */
     def +(rhs: dir): mathbotInstr = {
       rhs match {
-	      case `n` => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
-	      case `e` => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
-	      case `w` => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
-	      case `s` => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
+	      case `η` => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
+	      case `ε` => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
+	      case `ω` => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
+	      case `ς` => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
       }
       
     }
     
+    //Does the same thing as +; gives the user more freedom in the language
     def -(rhs: dir): mathbotInstr = {
       rhs match {
-	      case `n` => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
-	      case `e` => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
-	      case `w` => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
-	      case `s` => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
+	      case `η` => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
+	      case `ε` => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
+	      case `ω` => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
+	      case `ς` => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
       }
       
     }
@@ -119,16 +132,6 @@ trait ruleClass {
 	      this.moveDir,
 	      this.nextState)
     }
-        
-    // * works weird
-//    def *(rhs: dir): mathbotInstr = {
-//      rhs match {
-//	      case `n` => new mathbotInstr(nextState, picolib.semantics.North, mathbot)
-//	      case `e` => new mathbotInstr(nextState, picolib.semantics.East, mathbot)
-//	      case `w` => new mathbotInstr(nextState, picolib.semantics.West, mathbot)
-//	      case `s` => new mathbotInstr(nextState, picolib.semantics.South, mathbot)
-//      }
-//    }
   }
   
   object Proof {
@@ -151,7 +154,5 @@ trait ruleClass {
       bot
     }
   }
-  
-
 }
 
