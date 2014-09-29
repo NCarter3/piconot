@@ -23,21 +23,21 @@ experience how different a language's syntax can be from its semantics.
 In short: get in there and play. Push internal DSLs to the limit! 
 
 ## Checklist
-  - [ ] [Sign up for teams][Teams]. Team 1 will have three people; all other 
+  - [x] [Sign up for teams][Teams]. Team 1 will have three people; all other 
     teams will have two people
-  - [ ] Formally specify the syntax for the original version of Picobot in 
+  - [x] Formally specify the syntax for the original version of Picobot in 
     `grammar-orig.txt`
-  - [ ] Design a new syntax for Picobot 
-     - [ ] Describe your design in `design.txt`
-     - [ ] Before you implement the syntax, formally specify it in 
+  - [x] Design a new syntax for Picobot 
+     - [x] Describe your design in `design.txt`
+     - [x] Before you implement the syntax, formally specify it in 
        `grammar-ideal.txt`
-  - [ ] Implement your new syntax
-     - [ ] Add files, as needed, to implement your syntax
+  - [x] Implement your new syntax
+     - [x] Add files, as needed, to implement your syntax
      - Include two example programs
-       - [ ] `src/main/scala/piconot/Empty.scala`
-       - [ ] `src/main/scala/piconot/RightHand.scala`
-     - [ ] Describe your implementation process in `evaluation.txt`
-     - [ ] Formally specify your final syntax in `grammar-final.txt`
+       - [x] `src/main/scala/piconot/Empty.scala`
+       - [x] `src/main/scala/piconot/RightHand.scala`
+     - [x] Describe your implementation process in `evaluation.txt`
+     - [x] Formally specify your final syntax in `grammar-final.txt`
 
 ## Warm-up: Formal syntax
 Formally specify the syntax for [Picobot, as it's defined in CS 5][Picobot]. 
