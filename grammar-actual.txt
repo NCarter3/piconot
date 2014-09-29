@@ -5,11 +5,15 @@ Author: Emily Blatter, Nick Carter, Sisi Cheng
 Grammar: MathBot
 ================================================================================
 
-Program = Declaration, Givens, Logic, QED;
+Program = Setup, Declaration, Givens, Logic, QED, close;
 
+Setup = "package piconot", [ whitespace ], "import scalafx.application.JFXApp",
+		[ whitespace ], "object", Name, "extends JFXApp with Mathbot {", [whitespace];
 Declaration = Proof, end, [ whitespace ];
 Givens = Recall, [ whitespace ], Maze, end, [ whitespace ];
 Logic = Consider, [ whitespace ], Rules, end [ whitespace ];
+
+Name = ? unicode string ?
 
 Proof = "Proof"
 Recall = "Recall";
@@ -31,3 +35,4 @@ op = [ whitespace ], ("+" | "-"), [ whitespace ];
 state = [ digit ], digit;
 digit = "0"| "1"| "2"| "3"| "4"| "5"| "6"| "7"| "8"| "9";
 direction = "n" | "e" | "w" | "s" | "η" | "ε" | "ω" | "ς";
+close = "}"
